@@ -8,17 +8,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, deleteContact } from 'Redux/contactsSlice';
 import { getFilter } from 'Redux/filterSlice';
 
-// export const ContactList =({removeById, contacts})=>{
 export const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const filteredContacts = useSelector(getFilter);
+  const filterTerm = useSelector(getFilter);
 
   const handleOnClick = e => {
     dispatch(deleteContact(e.target.id));
   };
 
-  const showContacts = filteredContacts ? filteredContacts : contacts;
+  const showContacts = contacts.filter(item =>
+    item.userName.toLowerCase().includes(filterTerm)
+  );
 
   return (
     <div>
